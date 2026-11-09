@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XmlArchiveApp.MainPage"
+             Title="Електронний архів">
+
+    <Grid ColumnDefinitions="320,*" Padding="12" ColumnSpacing="12">
+
+      
+        <ScrollView Grid.Column="0">
+            <VerticalStackLayout Spacing="8">
+                <Button Text="Обрати XML-файл" Command="{Binding LoadFileCommand}" />
+                <Label Text="{Binding FilePath}" FontSize="11" LineBreakMode="MiddleTruncation" />
+
+                <Label Text="Метод аналізу" FontAttributes="Bold" Margin="0,8,0,0" />
+                <Picker ItemsSource="{Binding Methods}"
+                        SelectedItem="{Binding SelectedMethod}" />
+
+                <Label Text="Параметри пошуку" FontAttributes="Bold" Margin="0,8,0,0" />
+                <Picker Title="Автор"
+                        ItemsSource="{Binding AuthorValues}"
+                        SelectedItem="{Binding SelectedAuthor}" />
+                <Picker Title="Вид матеріалу"
+                        ItemsSource="{Binding MaterialTypeValues}"
+                        SelectedItem="{Binding SelectedMaterialType}" />
+                <Picker Title="Факультет"
+                        ItemsSource="{Binding FacultyValues}"
+                        SelectedItem="{Binding SelectedFaculty}" />
+                <Picker Title="Кафедра"
+                        ItemsSource="{Binding DepartmentValues}"
+                        SelectedItem="{Binding SelectedDepartment}" />
+                <Picker Title="Дата створення"
+                        ItemsSource="{Binding CreatedDateValues}"
+                        SelectedItem="{Binding SelectedCreatedDate}" />
+                <Entry Placeholder="Ключове слово (назва або автор)" Text="{Binding Keyword}" />
+
+                <Button Text="Пошук" Command="{Binding SearchCommand}" Margin="0,8,0,0" />
+                <Button Text="Перетворити в HTML" Command="{Binding TransformCommand}" />
+                <Button Text="Clear" Command="{Binding ClearCommand}" />
+                <Button Text="Вийти" Command="{Binding ExitCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,*,Auto,*,Auto" RowSpacing="8">
+            <Label Grid.Row="0" Text="Результати пошуку" FontAttributes="Bold" />
+
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Results}">
+                <CollectionView.Header>
+                    <Grid ColumnDefinitions="40,*,*,*,100,100" Padding="4">
+                        <Label Grid.Column="0" Text="№" FontAttributes="Bold" />
+                        <Label Grid.Column="1" Text="Назва" FontAttributes="Bold" />
+                        <Label Grid.Column="2" Text="Автор" FontAttributes="Bold" />
+                        <Label Grid.Column="3" Text="Кафедра" FontAttributes="Bold" />
+                        <Label Grid.Column="4" Text="Вид" FontAttributes="Bold" />
+                        <Label Grid.Column="5" Text="Дата" FontAttributes="Bold" />
+                    </Grid>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="40,*,*,*,100,100" Padding="4">
+                            <Label Grid.Column="0" Text="{Binding Id}" />
+                            <Label Grid.Column="1" Text="{Binding Title}" />
+                            <Label Grid.Column="2" Text="{Binding Author}" />
+                            <Label Grid.Column="3" Text="{Binding Department}" />
+                            <Label Grid.Column="4" Text="{Binding MaterialType}" />
+                            <Label Grid.Column="5" Text="{Binding CreatedDate}" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Grid.Row="2" Text="HTML-перегляд" FontAttributes="Bold" />
+            <WebView Grid.Row="3" Source="{Binding HtmlSource}" />
+
+            <Label Grid.Row="4" Text="{Binding Status}" FontSize="12" />
+        </Grid>
+    </Grid>
+</ContentPage>
