@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<archive>
+  <material id="1" type="стаття" created="2025-03-12" size="2 МБ">
+    <title>Методи аналізу XML</title>
+    <author name="Шевченко І.І." faculty="ФІТ" department="Кафедра СА"/>
+  </material>
+  <material id="2" type="звіт" created="2025-05-20">
+    <title>Звіт з практики</title>
+    <author name="Мусійчук П.П." faculty="ФІТ" department="Кафедра КН"/>
+  </material>
+  <material id="3" type="лекція">
+    <title>Шаблони проєктування</title>
+    <author name="Шевченко І.І." faculty="ФІТ" department="Кафедра СА"/>
+  </material>
+  <material id="4" type="стаття" created="2024-11-03" size="1 МБ">
+    <title>Паралельні алгоритми</title>
+    <author name="Замогильна С.С." faculty="ФММ" department="Кафедра ПМ"/>
+  </material>
+  <material id="5" type="дисертація" created="2023-06-30" size="15 МБ">
+    <title>Оптимізація запитів</title>
+    <author name="Лісоруба К.К." faculty="ФКНК" department="Кафедра ПМ"/>
+  </material>
+  <material id="6" type="лекція" size="500 КБ">
+    <title>Основи MAUI</title>
+    <author name="Мусійчук П.П." faculty="ФІТ" department="Кафедра КН"/>
+  </material>
+</archive>
