@@ -112,15 +112,8 @@ public class MainViewModel : INotifyPropertyChanged
             return;
         }
 
-        Criteria = new SearchCriteria
-        {
-            Author = SelectedAuthor ?? "",
-            MaterialType = SelectedMaterialType ?? "",
-            Faculty = SelectedFaculty ?? "",
-            Department = SelectedDepartment ?? "",
-            CreatedDate = SelectedCreatedDate ?? "",
-            Keyword = Keyword
-        };
+        Criteria = BuildCriteria();
+        
 
         if (Criteria.IsEmpty)
         {
@@ -153,7 +146,21 @@ public class MainViewModel : INotifyPropertyChanged
         try
         {
             string xslPath = await CopyXslToCacheAsync();
-            string html = _transformer.Transform(FilePath, xslPath);
+            SearchCriteria criteria = BuildCriteria();
+            string html;
+
+            if (criteria.IsEmpty)
+            {
+                
+                html = _transformer.Transform(FilePath, xslPath);
+            }
+            else
+            {
+               
+                ApplyStrategy();
+                var found = _analyzer.Search(FilePath, criteria);
+                html = _transformer.TransformItems(found, xslPath);
+            }
 
             string outPath = Path.ChangeExtension(FilePath, ".html");
             await File.WriteAllTextAsync(outPath, html);
@@ -167,7 +174,7 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 
-   
+
     public void Clear()
     {
         Results.Clear();
@@ -191,7 +198,16 @@ public class MainViewModel : INotifyPropertyChanged
         if (yes) Application.Current?.Quit();
     }
 
-    
+    private SearchCriteria BuildCriteria() => new()
+    {
+        Author = SelectedAuthor ?? "",
+        MaterialType = SelectedMaterialType ?? "",
+        Faculty = SelectedFaculty ?? "",
+        Department = SelectedDepartment ?? "",
+        CreatedDate = SelectedCreatedDate ?? "",
+        Keyword = Keyword
+    };
+
     private void ApplyStrategy()
     {
         IAnalysisStrategy strategy = SelectedMethod switch
